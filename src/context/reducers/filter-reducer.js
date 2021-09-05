@@ -7,7 +7,8 @@ export const initialState = {
   large: false,
   xl: false,
   men: false,
-  women: false
+  women: false,
+  brand: []
 };
 
 export const filterReducer = (state, action) => {
@@ -93,6 +94,14 @@ export const filterReducer = (state, action) => {
         ...state,
         men: false,
         women: false
+      };
+    case "BRAND":
+      const found = state.brand.find(item => item === action.payload);
+      return {
+        ...state,
+        brand: found
+          ? state.brand.filter(item => item !== action.payload)
+          : [...state.brand, action.payload]
       };
 
     default:

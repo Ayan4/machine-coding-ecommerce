@@ -72,7 +72,65 @@ function Filters() {
         </button>
       </div>
 
-      <div>{/* <input value={} type="checkbox" /> */}</div>
+      <div className="mt-4 border-t pt-2">
+        <p className="text-left">Filter Brand</p>
+        <div className="text-left mt-4">
+          <input
+            className="mr-2"
+            onClick={() => filterDispatch({ type: "BRAND", payload: "Wrogn" })}
+            type="checkbox"
+          />
+          <label htmlFor="">Wrogn</label>
+        </div>
+        <div className="text-left mt-4">
+          <input
+            className="mr-2"
+            onClick={() =>
+              filterDispatch({ type: "BRAND", payload: "Fido Dido" })
+            }
+            type="checkbox"
+          />
+          <label htmlFor="">Fido Dido</label>
+        </div>
+        <div className="text-left mt-4">
+          <input
+            className="mr-2"
+            onClick={() =>
+              filterDispatch({ type: "BRAND", payload: "Huetrap" })
+            }
+            type="checkbox"
+          />
+          <label htmlFor="">Huetrap</label>
+        </div>
+        <div className="text-left mt-4">
+          <input
+            className="mr-2"
+            onClick={() => filterDispatch({ type: "BRAND", payload: "Mayra" })}
+            type="checkbox"
+          />
+          <label htmlFor="">Mayra</label>
+        </div>
+        <div className="text-left mt-4">
+          <input
+            className="mr-2"
+            onClick={() =>
+              filterDispatch({ type: "BRAND", payload: "Roadster" })
+            }
+            type="checkbox"
+          />
+          <label htmlFor="">Roadster</label>
+        </div>
+        <div className="text-left mt-4">
+          <input
+            className="mr-2"
+            onClick={() =>
+              filterDispatch({ type: "BRAND", payload: "La Zoire" })
+            }
+            type="checkbox"
+          />
+          <label htmlFor="">La Zoire</label>
+        </div>
+      </div>
     </div>
   );
 }

@@ -4,8 +4,6 @@ import { useFilter } from "../context/Filter-context";
 function Sort() {
   const { filterDispatch, filterState } = useFilter();
 
-  console.log(filterState);
-
   return (
     <div className="flex my-4 px-8 sm:px-28">
       <p className="text-lg mr-5 border px-1.5">Sort By:</p>

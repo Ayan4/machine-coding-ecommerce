@@ -9,6 +9,8 @@ function ProductListing() {
   const [loading, setLoading] = useState(true);
   const { filterState } = useFilter();
 
+  console.log(filterState);
+
   useEffect(() => {
     setLoading(true);
     try {
@@ -35,6 +37,8 @@ function ProductListing() {
     if (filterState.lowToHigh) {
       productArr.sort((a, b) => a.price - b.price);
     }
+
+    return productArr;
   };
 
   const getFilteredData = productArr => {

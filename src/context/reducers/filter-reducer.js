@@ -1,107 +1,57 @@
 export const initialState = {
-  all: true,
-  highToLow: false,
-  lowToHigh: false,
-  small: false,
-  medium: false,
-  large: false,
-  xl: false,
-  men: false,
-  women: false,
-  brand: []
+  sortBy: null,
+  filter: {
+    size: [],
+    sex: [],
+    brand: []
+  }
 };
 
 export const filterReducer = (state, action) => {
   switch (action.type) {
-    case "ALL_PRICE":
+    case "SORT":
       return {
         ...state,
-        all: true,
-        highToLow: false,
-        lowToHigh: false
+        sortBy: action.payload
       };
 
-    case "HIGH_TO_LOW":
+    case "CLEAR":
+      return initialState;
+
+    case "SIZE":
+      const foundSize = state.filter.size.includes(action.payload);
       return {
         ...state,
-        all: false,
-        lowToHigh: false,
-        highToLow: !state.highToLow
+        filter: {
+          ...state.filter,
+          size: foundSize
+            ? state.filter.size.filter(item => item !== action.payload)
+            : [...state.filter.size, action.payload]
+        }
       };
 
-    case "LOW_TO_HIGH":
+    case "IDEAL_FOR":
+      const idealFound = state.filter.sex.includes(action.payload);
       return {
         ...state,
-        all: false,
-        highToLow: false,
-        lowToHigh: !state.lowToHigh
-      };
-    case "SMALL":
-      return {
-        ...state,
-        small: !state.small,
-        medium: false,
-        large: false,
-        xl: false
-      };
-    case "MEDIUM":
-      return {
-        ...state,
-        small: false,
-        medium: !state.medium,
-        large: false,
-        xl: false
-      };
-    case "LARGE":
-      return {
-        ...state,
-        small: false,
-        medium: false,
-        large: !state.large,
-        xl: false
+        filter: {
+          ...state.filter,
+          sex: idealFound
+            ? state.filter.sex.filter(item => item !== action.payload)
+            : [...state.filter.sex, action.payload]
+        }
       };
 
-    case "XL":
-      return {
-        ...state,
-        small: false,
-        medium: false,
-        large: false,
-        xl: !state.xl
-      };
-    case "CLEAR_SIZE":
-      return {
-        ...state,
-        small: false,
-        medium: false,
-        large: false,
-        xl: false
-      };
-    case "MEN":
-      return {
-        ...state,
-        men: !state.men,
-        women: false
-      };
-    case "WOMEN":
-      return {
-        ...state,
-        men: false,
-        women: !state.women
-      };
-    case "CLEAR_GENDER":
-      return {
-        ...state,
-        men: false,
-        women: false
-      };
     case "BRAND":
-      const found = state.brand.find(item => item === action.payload);
+      const foundBrand = state.filter.brand.includes(action.payload);
       return {
         ...state,
-        brand: found
-          ? state.brand.filter(item => item !== action.payload)
-          : [...state.brand, action.payload]
+        filter: {
+          ...state.filter,
+          brand: foundBrand
+            ? state.filter.brand.filter(item => item !== action.payload)
+            : [...state.filter.brand, action.payload]
+        }
       };
 
     default:

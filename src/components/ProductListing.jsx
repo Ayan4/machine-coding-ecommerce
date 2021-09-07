@@ -9,7 +9,7 @@ function ProductListing() {
   const [loading, setLoading] = useState(true);
   const { filterState } = useFilter();
 
-  console.log(filterState);
+  // console.log(filterState);
 
   useEffect(() => {
     setLoading(true);
@@ -27,51 +27,68 @@ function ProductListing() {
   }, []);
 
   const getSortedData = productArr => {
-    if (filterState.all) {
-      return productArr;
-    }
-    if (filterState.highToLow) {
-      productArr.sort((a, b) => b.price - a.price);
-    }
+    const sortArr = [...productArr];
 
-    if (filterState.lowToHigh) {
-      productArr.sort((a, b) => a.price - b.price);
+    if (filterState.sortBy === "highToLow") {
+      return sortArr.sort((a, b) => b.price - a.price);
     }
 
-    return productArr;
-  };
-
-  const getFilteredData = productArr => {
-    if (filterState.small) {
-      return productArr.filter(item => item.size === "s");
-    }
-
-    if (filterState.medium) {
-      return productArr.filter(item => item.size === "m");
-    }
-
-    if (filterState.large) {
-      return productArr.filter(item => item.size === "l");
-    }
-
-    if (filterState.xl) {
-      return productArr.filter(item => item.size === "xl");
-    }
-
-    if (filterState.men) {
-      return productArr.filter(item => item.sex === "men");
-    }
-
-    if (filterState.women) {
-      return productArr.filter(item => item.sex === "women");
+    if (filterState.sortBy === "lowToHigh") {
+      return sortArr.sort((a, b) => a.price - b.price);
     }
 
     return productArr;
   };
 
-  getSortedData(products, filterState);
+  const getFilteredSize = productArr => {
+    const sizes = filterState.filter.size;
+    let filteredArr = [...productArr];
 
-  const transformedArr = getFilteredData(products);
+    if (sizes.length > 0) {
+      return filteredArr.filter(item => sizes.includes(item.size));
+    }
+    return productArr;
+  };
+
+  const getFilteredIdealFor = productArr => {
+    const genderArr = filterState.filter.sex;
+    let filteredArr = [...productArr];
+
+    if (genderArr.length > 0) {
+      return filteredArr.filter(item => genderArr.includes(item.sex));
+    }
+    return productArr;
+  };
+
+  const getFilteredBrand = productArr => {
+    const brandArr = filterState.filter.brand;
+    let filteredArr = [...productArr];
+
+    if (brandArr.length > 0) {
+      return filteredArr.filter(item => brandArr.includes(item.brand));
+    }
+    return productArr;
+  };
+
+  // const metaFilteredProducts = productArr => {
+  //   let filteredProducts = [...productArr];
+  //   const filterObj = filterState.filter;
+
+  //   for (let filterType in filterObj) {
+  //     if (filterObj[filterType].length > 0) {
+  //       return filteredProducts.filter(item => filterObj[filterType].some(selectedFilter => ))
+  //     }
+  //   }
+
+  //   return productArr;
+  // };
+
+  const sortedProducts = getSortedData(products, filterState);
+  // metaFilteredProducts(sortedProducts);
+
+  const filteredSizeProducts = getFilteredSize(sortedProducts);
+  const filteredIdealForProducts = getFilteredIdealFor(filteredSizeProducts);
+  const filteredProducts = getFilteredBrand(filteredIdealForProducts);
 
   if (loading)
     return (
@@ -82,7 +99,7 @@ function ProductListing() {
 
   return (
     <div className="px-2 sm:px-16 flex flex-wrap justify-center">
-      {transformedArr.map(item => (
+      {filteredProducts.map(item => (
         <ProductCard key={item.id} product={item} />
       ))}
     </div>

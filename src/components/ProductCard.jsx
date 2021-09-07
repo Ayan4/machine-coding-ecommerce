@@ -9,7 +9,7 @@ function ProductCard(productItem) {
       <p className="text-gray-900">{product.name}</p>
       <div className="flex justify-between border-t mt-1 pt-1">
         <p className="text-gray-900 font-semibold">Rs.{product.price}</p>
-        <p>size: {product.size.toUpperCase()}</p>
+        <p>size: {product.size}</p>
       </div>
     </div>
   );

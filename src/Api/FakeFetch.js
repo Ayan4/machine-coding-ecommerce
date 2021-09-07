@@ -1,5 +1,4 @@
 import products from "../products.json";
-console.log(products);
 
 export const fakeFetch = () => {
   return new Promise((resolve, reject) => {
